@@ -27,11 +27,12 @@ userRouter.post("/login", async (req, res) => {
     const token = jwt.sign(
       {
         userId: existUser._id,
+        role: existUser.role,
       },
       "secret",
-      { expiresIn: "1h" }
+      { expiresIn: "24h" }
     );
-    return res.status(200).send(token);
+    return res.status(200).send({token, role: existUser.role, name: existUser.username});
   });
 });
 
