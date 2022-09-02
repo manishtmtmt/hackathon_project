@@ -12,101 +12,60 @@ import {
   Td,
   Tr,
   Button,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+  FormControl,
+  FormLabel,
+  Input,
 } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getDoctorsData } from "../AppReducer/action";
-
-// const patients = [
-//   {
-//     id: 1,
-//     name: "user1",
-//     description: "about the disease",
-//   },
-//   {
-//     id: 1,
-//     name: "user1",
-//     description: "about the disease",
-//   },
-//   {
-//     id: 1,
-//     name: "user1",
-//     description: "about the disease",
-//   },
-//   {
-//     id: 1,
-//     name: "user1",
-//     description: "about the disease",
-//   },
-//   {
-//     id: 1,
-//     name: "user1",
-//     description: "about the disease",
-//   },
-// ];
-// const doctors = [
-//   {
-//     id: 1,
-//     profileImage: "",
-//     name: "john",
-//     specilization: "cordiologist",
-//     experience: "10 years",
-//     queue: "5 patients",
-//   },
-//   {
-//     id: 2,
-//     profileImage: "",
-//     name: "john",
-//     specilization: "cordiologist",
-//     experience: "10 years",
-//     queue: "5 patients",
-//   },
-//   {
-//     id: 3,
-//     profileImage: "",
-//     name: "doe",
-//     specilization: "dentist",
-//     experience: "10 years",
-//     queue: "5 patients",
-//   },
-//   {
-//     id: 4,
-//     profileImage: "",
-//     name: "vikram",
-//     specilization: "cordiologist",
-//     experience: "10 years",
-//     queue: "5 patients",
-//   },
-//   {
-//     id: 5,
-//     profileImage: "",
-//     name: "rolex",
-//     specilization: "Allergist",
-//     experience: "10 years",
-//     queue: "5 patients",
-//   },
-//   {
-//     id: 6,
-//     profileImage: "",
-//     name: "vinay",
-//     specilization: "Dermatologists",
-//     experience: "10 years",
-//     queue: "5 patients",
-//   },
-//   {
-//     profileImage: "",
-//     name: "nani",
-//     specilization: "Endocrinologists",
-//     experience: "10 years",
-//     queue: "5 patients",
-//   },
-// ];
+import { bookAppointment, getDoctorsData } from "../AppReducer/action";
+import BookAppoitment from "../components/BookAppoitment";
+import { loadData } from "../hoc/LocalStorage";
 
 export const DoctorProfile = () => {
+  let email = loadData("email");
+  const initialRef = React.useRef(null);
+  const finalRef = React.useRef(null);
+  const [specilization, setSpecilization] = useState("");
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const doctors = useSelector((state) => state.app.doctors);
   const dispatch = useDispatch();
   const { id } = useParams();
   const [signleDoctor, setSingleDoctor] = useState({});
+  const [patient, setPatient] = useState({
+    email,
+    completed: false,
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setPatient({
+      ...patient,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = () => {
+    const currentDoctor = doctors.find((doctor) => doctor._id === id);
+    setPatient({ ...patient, specilization: currentDoctor.specilization });
+    const callback = (x) => {
+      console.log(x);
+    };
+
+    callback(patient);
+    // console.log(signleDoctor.specilization);
+    // setSpecilization(signleDoctor.specilization);
+    // console.log(specilization);
+    // dispatch(bookAppointment(patient));
+  };
 
   // getting the doctors data while refreshing also
   useEffect(() => {
@@ -134,6 +93,45 @@ export const DoctorProfile = () => {
           </Box>
         </Flex>
       </Box>
+      <Button onClick={onOpen}>Book Appointment</Button>
+
+      <Modal
+        initialFocusRef={initialRef}
+        finalFocusRef={finalRef}
+        isOpen={isOpen}
+        onClose={onClose}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Book an Appointment</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody pb={6}>
+            <FormControl>
+              <FormLabel>Patient name</FormLabel>
+              <Input
+                placeholder="Patient name"
+                name="patientname"
+                onChange={handleChange}
+              />
+            </FormControl>
+            <FormControl mt={4}>
+              <FormLabel>Description</FormLabel>
+              <Input
+                placeholder="Description"
+                name="description"
+                onChange={handleChange}
+              />
+            </FormControl>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={handleSubmit}>
+              Book
+            </Button>
+            <Button onClick={onClose}>Cancel</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
 
       {/* <Table border="1px solid red" w="60%" m="auto" mt="10">
         <Thead>
@@ -155,7 +153,6 @@ export const DoctorProfile = () => {
           ))}
         </Tbody>
       </Table> */}
-      
     </Container>
   );
 };

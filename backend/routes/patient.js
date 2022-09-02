@@ -6,6 +6,7 @@ const PatientModel = require("../models/Patient");
 
 patientRouter.post("/create", async (req, res) => {
   const data = req.body;
+  console.log(data)
   const newPatient = new PatientModel(data);
   await newPatient.save();
   return res.status(200).send("Patient successfully booked the appointment");

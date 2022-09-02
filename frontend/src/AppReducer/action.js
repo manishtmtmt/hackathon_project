@@ -1,6 +1,9 @@
 //empty
 import * as types from "./action.type";
+import { useToast } from '@chakra-ui/react'
 import axios from "axios";
+
+
 const getDoctorsData = () => (dispatch) => {
   dispatch({ type: types.GET_DOCTORS_DATA_REQUEST });
   axios
@@ -13,12 +16,39 @@ const getDoctorsData = () => (dispatch) => {
     );
 };
 
-export const singleDoctor =(email) =>dispatch=>{
-    dispatch({type:types.GET_SINGLE_DOCTOR_LOADING})
-    axios.post('http://localhost:5000/doctors/single',{email})
-    .then((r)=>(console.log(r),dispatch({type:types.GET_SINGLE_DOCTOR_SUCCESS,payload:r.data})))
-    .catch((err)=>(console.log(err),dispatch({type:types.GET_SINGLE_DOCTOR_ERROR})))
-}
+export const singleDoctor = (email) => (dispatch) => {
+  dispatch({ type: types.GET_SINGLE_DOCTOR_LOADING });
+  axios
+    .post("http://localhost:5000/doctors/single", { email })
+    .then(
+      (r) => (
+        console.log(r),
+        dispatch({ type: types.GET_SINGLE_DOCTOR_SUCCESS, payload: r.data })
+      )
+    )
+    .catch(
+      (err) => (
+        console.log(err), dispatch({ type: types.GET_SINGLE_DOCTOR_ERROR })
+      )
+    );
+};
 
+export const bookAppointment = (data) => (dispatch) => {
+  dispatch({ type: types.BOOK_APPOINTMENT_LOADING });
+  axios
+    .post("http://localhost:5000/patient/create", data)
+    .then(
+      (res) => (
+        console.log(res),
+        dispatch({ type: types.BOOK_APPOINTMENT_SUCESSS, payload: data })
+      )
+    )
+    .catch((err) =>
+      dispatch({
+        type: types.BOOK_APPOINTMENT_FAILURE,
+        payload: err.response.data,
+      })
+    );
+};
 
 export { getDoctorsData };

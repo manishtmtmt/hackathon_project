@@ -4,7 +4,8 @@ const initialState = {
   doctors: [],
   loading: false,
   error: false,
-  singledoc:{}
+  singledoc:{},
+  patients: [],
 };
 
 export const appReducer = (state = initialState, { type, payload }) => {
@@ -46,13 +47,37 @@ export const appReducer = (state = initialState, { type, payload }) => {
         singledoc:payload
       }
     }
-    case type.GET_SINGLE_DOCTOR_ERROR:{
+    case types.GET_SINGLE_DOCTOR_ERROR:{
       return {
         ...state,
         loading:false,
         error:true,
       }
     }
+
+    case types.BOOK_APPOINTMENT_LOADING : {
+      return {
+        ...state,
+        loading: true,
+      }
+    }
+
+    case types.BOOK_APPOINTMENT_SUCESSS: {
+      return {
+        ...state,
+        loading: false,
+        patients: [...state.patients, payload]
+      }
+    }
+
+    case types.BOOK_APPOINTMENT_FAILURE: {
+      return {
+        ...state,
+        loading: false,
+        error: true
+      }
+    }
+
     default: {
       return state;
     }
