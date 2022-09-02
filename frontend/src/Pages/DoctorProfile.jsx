@@ -27,7 +27,11 @@ import {
 } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { bookAppointment, getDoctorsData, getPatientQueueLength } from "../AppReducer/action";
+import {
+  bookAppointment,
+  getDoctorsData,
+  getPatientQueueLength,
+} from "../AppReducer/action";
 import BookAppoitment from "../components/BookAppoitment";
 import { loadData } from "../hoc/LocalStorage";
 
@@ -42,11 +46,13 @@ export const DoctorProfile = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const [signleDoctor, setSingleDoctor] = useState({});
-  const [noOfPatient, setNoOfPatient] = useState(0)
+  const [noOfPatient, setNoOfPatient] = useState(0);
   const [patient, setPatient] = useState({
     email,
     completed: false,
   });
+  const { queue, patients } = useSelector((state) => state.app);
+  console.log(queue, patients);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -62,8 +68,22 @@ export const DoctorProfile = () => {
     //   position: "top",
     //   isClosable: true,
     // })
-    dispatch(bookAppointment(id, patient))
+    dispatch(bookAppointment(id, patient));
+    onClose();
+    window.location.reload();
   };
+
+  const queueVal = () => {
+    let no = 0;
+    queue.map((ele, i) => {
+      if (ele.email === email) {
+        no = i + 1;
+      }
+    });
+    return no;
+  };
+
+  useEffect(() => {}, [queue.length]);
 
   // getting the doctors data while refreshing also
   useEffect(() => {
@@ -72,13 +92,9 @@ export const DoctorProfile = () => {
     }
   }, []);
 
-  useEffect(()=>{
-    dispatch(getPatientQueueLength(id)).then((res)=>{
-      setNoOfPatient(res.noOfPatient)
-    })
-  },[dispatch])
-
-  console.log(noOfPatient)
+  useEffect(() => {
+    dispatch(getPatientQueueLength(id));
+  }, [dispatch, queue.length]);
 
   // finding the doctor using id with useParams
   useEffect(() => {
@@ -96,11 +112,17 @@ export const DoctorProfile = () => {
             <Text>Name : {signleDoctor.name}</Text>
             <Text>Specilization : {signleDoctor.specilization}</Text>
             <Text>Experience : {signleDoctor.experience}</Text>
+            <Text>Patients in Queue : {queue.length}</Text>
           </Box>
         </Flex>
       </Box>
-      <Button onClick={onOpen}>Book Appointment</Button>
-
+      {/* <Button onClick={onOpen}>Book Appointment</Button> */}
+      {/* <Text m={2}>Your number is {queueVal()}</Text> */}
+      {queueVal() === 0 ? (
+        <Button onClick={onOpen}>Book Appointment</Button>
+      ) : (
+        <Text m={2}>Your number is {queueVal()}</Text>
+      )}
       <Modal
         initialFocusRef={initialRef}
         finalFocusRef={finalRef}

@@ -43,14 +43,8 @@ patientRouter.delete("/delete/:patientId", async (req, res) => {
 
 patientRouter.get("/queue/:doctorId", async (req, res) => {
   const {doctorId} = req.params;
-  PatientModel.countDocuments({doctorId, completed: false}).exec((err, count) => {
-    if (err) {
-        res.send(err);
-        return;
-    }
-
-    res.json({ count: count });
-});
+  const patients = await PatientModel.find({ doctorId, completed: false });
+  return res.status(200).send(patients);
 });
 
 module.exports = patientRouter;
