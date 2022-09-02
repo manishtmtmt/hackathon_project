@@ -8,6 +8,7 @@ import Schedule from "./Pages/Schedule";
 import Signup from "./Pages/Signup";
 import AdminsPage from "./Pages/AdminsPage";
 
+
 import { DoctorProfile } from "./Pages/DoctorProfile";
 import { UserPage } from "./Pages/UserPage";
 import { RequiredAuth } from "./hoc/RequiredAuth";
