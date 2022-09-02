@@ -8,6 +8,8 @@ const userRouter = Router();
 
 userRouter.post("/create", async (req, res) => {
   const user = req.body;
+  const existUser = await UserModel.findOne({email: user.email})
+  if(existUser) return res.status(400).send("user already exists")
   bcrypt.hash(user.password, 8, async function (err, hash) {
     if (err) return res.status(500).send("some error occured");
     const newUser = new UserModel({ ...user, password: hash });
