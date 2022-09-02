@@ -1,1 +1,1 @@
-export const LOGOUT = 'Logout';
+// empty
