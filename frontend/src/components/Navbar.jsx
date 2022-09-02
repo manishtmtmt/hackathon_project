@@ -1,6 +1,7 @@
 import { Box, Flex, Stack, Text } from "@chakra-ui/react";
 import React from "react";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import { Logoutapi } from "../AuthReducer/action";
 
 const Navbar = () => {
@@ -14,11 +15,13 @@ const Navbar = () => {
     <Flex justify={"space-between"} bg="teal.200">
       <Text m="1">Home</Text>
       <Flex justify={"space-evenly"}>
+        <Link to="/login" >
+
         <Text
           m="1"
           
           _hover={{
-            textDecoration: "none",
+              textDecoration: "none",
             color: "white",
             bg: "",
             cursor: "pointer",
@@ -27,6 +30,7 @@ const Navbar = () => {
           {" "}
           Login
         </Text>
+          </Link>
         <Text
           m="1"
           ml="3"
