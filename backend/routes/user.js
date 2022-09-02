@@ -2,14 +2,14 @@ const { Router } = require("express");
 const bcrypt = require("bcryptjs");
 var jwt = require("jsonwebtoken");
 
-const UserModel = require("../models/Patient");
+const UserModel = require("../models/User");
 
 const userRouter = Router();
 
 userRouter.post("/create", async (req, res) => {
   const user = req.body;
-  const existUser = await UserModel.findOne({email: user.email})
-  if(existUser) return res.status(400).send("user already exists")
+  const existUser = await UserModel.findOne({ email: user.email });
+  if (existUser) return res.status(400).send("user already exists");
   bcrypt.hash(user.password, 8, async function (err, hash) {
     if (err) return res.status(500).send("some error occured");
     const newUser = new UserModel({ ...user, password: hash });
@@ -34,7 +34,9 @@ userRouter.post("/login", async (req, res) => {
       "secret",
       { expiresIn: "24h" }
     );
-    return res.status(200).send({token, role: existUser.role, name: existUser.username});
+    return res
+      .status(200)
+      .send({ token, role: existUser.role, name: existUser.username });
   });
 });
 
