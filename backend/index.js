@@ -1,11 +1,16 @@
 require("dotenv").config();
 const express = require("express");
-let cors = require('cors')
+
+const cors = require("cors")
 
 const connection = require("./config/db")
 const userRouter = require("./routes/user");
 
 const app = express();
+
+app.use(cors({
+    origin: ["http://localhost:3000"]
+}))
 
 app.use(express.json());
 app.use(cors())
