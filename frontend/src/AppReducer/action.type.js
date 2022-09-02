@@ -9,3 +9,9 @@ export {
   GET_DOCTORS_DATA_SUCCESS,
   GET_DOCTORS_DATA_FAILURE,
 };
+
+
+export const GET_SINGLE_DOCTOR_LOADING = "get_single_doctor/loading";
+export const GET_SINGLE_DOCTOR_SUCCESS = "get_single_doctor/sucess";
+export const GET_SINGLE_DOCTOR_ERROR = "get_single_doctor/error";
+

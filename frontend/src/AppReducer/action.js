@@ -13,4 +13,12 @@ const getDoctorsData = () => (dispatch) => {
     );
 };
 
+export const singleDoctor =(email) =>dispatch=>{
+    dispatch({type:types.GET_SINGLE_DOCTOR_LOADING})
+    axios.post('http://localhost:5000/doctors/single',{email})
+    .then((r)=>(console.log(r),dispatch({type:types.GET_SINGLE_DOCTOR_SUCCESS,payload:r.data})))
+    .catch((err)=>(console.log(err),dispatch({type:types.GET_SINGLE_DOCTOR_ERROR})))
+}
+
+
 export { getDoctorsData };
