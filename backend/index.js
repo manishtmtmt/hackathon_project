@@ -5,6 +5,8 @@ const cors = require("cors")
 
 const connection = require("./config/db")
 const userRouter = require("./routes/user");
+const doctorRouter = require("./routes/doctors");
+const patientRouter = require("./routes/patient")
 
 const app = express();
 
@@ -17,6 +19,9 @@ app.use(cors())
 
 app.use("/user", userRouter);
 
+app.use("/doctors", doctorRouter);
+
+app.use("/patient", patientRouter)
 
 app.listen(process.env.PORT, async ()  => {
     try {
