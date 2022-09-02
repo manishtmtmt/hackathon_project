@@ -5,12 +5,6 @@ import {
   Image,
   Text,
   Flex,
-  Table,
-  Thead,
-  Th,
-  Tbody,
-  Td,
-  Tr,
   Button,
   Modal,
   ModalOverlay,
@@ -26,7 +20,11 @@ import {
 } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { bookAppointment, getDoctorsData } from "../AppReducer/action";
+import {
+  bookAppointment,
+  getDoctorsData,
+  singleDoctor,
+} from "../AppReducer/action";
 import BookAppoitment from "../components/BookAppoitment";
 import { loadData } from "../hoc/LocalStorage";
 
@@ -34,11 +32,12 @@ export const DoctorProfile = () => {
   let email = loadData("email");
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
-  const [specilization, setSpecilization] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
   const doctors = useSelector((state) => state.app.doctors);
   const dispatch = useDispatch();
   const { id } = useParams();
+  // let spc = loadData("spec")
+
   const [signleDoctor, setSingleDoctor] = useState({});
   const [patient, setPatient] = useState({
     email,
@@ -54,16 +53,8 @@ export const DoctorProfile = () => {
   };
 
   const handleSubmit = () => {
-    const currentDoctor = doctors.find((doctor) => doctor._id === id);
-    setPatient({ ...patient, specilization: currentDoctor.specilization });
-    const callback = (x) => {
-      console.log(x);
-    };
 
-    callback(patient);
-    // console.log(signleDoctor.specilization);
-    // setSpecilization(signleDoctor.specilization);
-    // console.log(specilization);
+    // console.log(patient);
     // dispatch(bookAppointment(patient));
   };
 
