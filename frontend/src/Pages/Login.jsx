@@ -21,7 +21,7 @@ import { loginApi } from '../AuthReducer/action';
     const [form , Setform] = useState({})
     const dispatch = useDispatch()
     const navigate = useNavigate();
-    const {isAuth} = useSelector(state=>state.login)
+    const {isAuth,role} = useSelector(state=>state.login)
     
     const handleChange=(e)=>{
         let {name,value} = e.target
@@ -37,8 +37,11 @@ import { loginApi } from '../AuthReducer/action';
 
     }
 
-    if(isAuth){
-        navigate("/home")
+    if(isAuth && role=="admin"){
+        navigate("/adminpage")
+    }
+    else if(isAuth && role=="user"){
+        navigate("/userpage")
     }
     return (
       <Flex

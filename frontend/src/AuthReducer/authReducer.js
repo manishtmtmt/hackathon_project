@@ -42,7 +42,19 @@ export const authReducer = (state= initialState,{type,payload}) =>{
             }
         }
         case LOGOUT:{
-            localStorage.clear();
+            saveData('token','')
+            saveData('isAuth',false)
+            saveData('role','')
+            saveData('username','')
+            return {
+                ...state,
+                loading:false,
+                error:false,
+                isAuth:false,
+                role:"",
+                username:"",
+                token:""
+            }
         }
         default:
             return state;
