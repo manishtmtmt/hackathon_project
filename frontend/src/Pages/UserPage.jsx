@@ -8,9 +8,11 @@ import {
   Text,
   Flex,
 } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 
 const doctors = [
   {
+    id: 1,
     profileImage: "",
     name: "john",
     specilization: "cordiologist",
@@ -18,6 +20,7 @@ const doctors = [
     queue: "5 patients",
   },
   {
+    id: 2,
     profileImage: "",
     name: "john",
     specilization: "cordiologist",
@@ -25,6 +28,7 @@ const doctors = [
     queue: "5 patients",
   },
   {
+    id: 3,
     profileImage: "",
     name: "doe",
     specilization: "dentist",
@@ -32,6 +36,7 @@ const doctors = [
     queue: "5 patients",
   },
   {
+    id: 4,
     profileImage: "",
     name: "vikram",
     specilization: "cordiologist",
@@ -39,6 +44,7 @@ const doctors = [
     queue: "5 patients",
   },
   {
+    id: 5,
     profileImage: "",
     name: "rolex",
     specilization: "Allergist",
@@ -46,6 +52,7 @@ const doctors = [
     queue: "5 patients",
   },
   {
+    id: 6,
     profileImage: "",
     name: "vinay",
     specilization: "Dermatologists",
@@ -65,22 +72,24 @@ export const UserPage = () => {
     <Container border="2px solid red" maxW="100%">
       <Grid gridTemplateColumns="repeat(2,1fr)" w="65%" m="auto" gridGap="20px">
         {doctors.map((doctor) => (
-          <GridItem border="2px solid red">
-            <Flex cursor="pointer">
-              <Image
-                src="https://img.freepik.com/free-vector/doctor-character-background_1270-84.jpg?w=2000"
-                alt="profile"
-                w="150px"
-                h="150px"
-              />
-              <Box m="auto" lineHeight="30px" textAlign="left">
-                <Text>Name : {doctor.name}</Text>
-                <Text>Specilization : {doctor.specilization}</Text>
-                <Text>Experience : {doctor.experience}</Text>
-                <Text>Patients in Queue : {doctor.queue}</Text>
-              </Box>
-            </Flex>
-          </GridItem>
+          <Link to={`/doctorprofile/${doctor.id}`}>
+            <GridItem border="2px solid red">
+              <Flex cursor="pointer">
+                <Image
+                  src="https://img.freepik.com/free-vector/doctor-character-background_1270-84.jpg?w=2000"
+                  alt="profile"
+                  w="150px"
+                  h="150px"
+                />
+                <Box m="auto" lineHeight="30px" textAlign="left">
+                  <Text>Name : {doctor.name}</Text>
+                  <Text>Specilization : {doctor.specilization}</Text>
+                  <Text>Experience : {doctor.experience}</Text>
+                  <Text>Patients in Queue : {doctor.queue}</Text>
+                </Box>
+              </Flex>
+            </GridItem>
+          </Link>
         ))}
       </Grid>
     </Container>
