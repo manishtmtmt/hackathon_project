@@ -1,14 +1,16 @@
 import { Box, Flex, Stack, Text } from "@chakra-ui/react";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Logoutapi } from "../AuthReducer/action";
 
 const Navbar = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const handleLogout = () => {
         dispatch(Logoutapi())
+        navigate('/login')
     }
 
   return (
