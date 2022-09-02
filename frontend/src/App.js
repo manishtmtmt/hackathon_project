@@ -12,7 +12,7 @@ import { UserPage } from "./components/UserPage";
 
 
 import Signup from './Pages/Signup';
-
+//done
 
 function App() {
   return (
@@ -24,9 +24,9 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/schedule" element={<Schedule />} />
         <Route path="/signup" element={<Signup />} />
+      
         <Route path="/userpage" element={<UserPage />} />
       </Routes>
-
     </div>
   );
 }
