@@ -4,9 +4,9 @@ const initialState = {
   doctors: [],
   loading: false,
   error: false,
-  singledoc:{},
+  singledoc: {},
   patients: [],
-  noOfPatient: 0
+  queue: [],
 };
 
 export const appReducer = (state = initialState, { type, payload }) => {
@@ -33,57 +33,57 @@ export const appReducer = (state = initialState, { type, payload }) => {
         error: true,
       };
     }
-    case types.GET_SINGLE_DOCTOR_LOADING:{
+    case types.GET_SINGLE_DOCTOR_LOADING: {
       return {
         ...state,
         loading: true,
-        error:false
-      }
+        error: false,
+      };
     }
-    case types.GET_SINGLE_DOCTOR_SUCCESS:{
+    case types.GET_SINGLE_DOCTOR_SUCCESS: {
       return {
         ...state,
-        loading:false,
-        error:false,
-        singledoc:payload
-      }
+        loading: false,
+        error: false,
+        singledoc: payload,
+      };
     }
-    case types.GET_SINGLE_DOCTOR_ERROR:{
+    case types.GET_SINGLE_DOCTOR_ERROR: {
       return {
         ...state,
-        loading:false,
-        error:true,
-      }
+        loading: false,
+        error: true,
+      };
     }
 
-    case types.BOOK_APPOINTMENT_LOADING : {
+    case types.BOOK_APPOINTMENT_LOADING: {
       return {
         ...state,
         loading: true,
-      }
+      };
     }
 
     case types.BOOK_APPOINTMENT_SUCESSS: {
       return {
         ...state,
         loading: false,
-        patients: [...state.patients, payload]
-      }
+        patients: [...state.patients, payload],
+      };
     }
 
     case types.BOOK_APPOINTMENT_FAILURE: {
       return {
         ...state,
         loading: false,
-        error: true
-      }
+        error: true,
+      };
     }
 
     case types.PATIENT_QUEUE_LENGTH: {
       return {
         ...state,
-        noOfPatient: payload
-      }
+        queue: payload,
+      };
     }
 
     default: {

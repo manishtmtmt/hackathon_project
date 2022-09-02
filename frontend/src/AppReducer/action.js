@@ -34,7 +34,7 @@ export const singleDoctor = (email) => (dispatch) => {
 
 export const bookAppointment = (param, data) => (dispatch) => {
   dispatch({ type: types.BOOK_APPOINTMENT_LOADING });
-  axios
+  return axios
     .post(`http://localhost:5000/patient/create/${param}`, data)
     .then((res) =>
       dispatch({ type: types.BOOK_APPOINTMENT_SUCESSS, payload: data })
@@ -51,8 +51,7 @@ export const getPatientQueueLength = (params) => (dispatch) => {
   return axios
     .get(`http://localhost:5000/patient/queue/${params}`)
     .then((res) => {
-      dispatch({ type: types.PATIENT_QUEUE_LENGTH, payload: res.data.count });
-      return { noOfPatient: res.data.count };
+      dispatch({ type: types.PATIENT_QUEUE_LENGTH, payload: res.data });
     });
 };
 
