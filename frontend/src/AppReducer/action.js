@@ -1,8 +1,7 @@
 //empty
 import * as types from "./action.type";
-import { useToast } from '@chakra-ui/react'
+import { useToast } from "@chakra-ui/react";
 import axios from "axios";
-
 
 const getDoctorsData = () => (dispatch) => {
   dispatch({ type: types.GET_DOCTORS_DATA_REQUEST });
@@ -33,15 +32,12 @@ export const singleDoctor = (email) => (dispatch) => {
     );
 };
 
-export const bookAppointment = (data) => (dispatch) => {
+export const bookAppointment = (param, data) => (dispatch) => {
   dispatch({ type: types.BOOK_APPOINTMENT_LOADING });
   axios
-    .post("http://localhost:5000/patient/create", data)
-    .then(
-      (res) => (
-        console.log(res),
-        dispatch({ type: types.BOOK_APPOINTMENT_SUCESSS, payload: data })
-      )
+    .post(`http://localhost:5000/patient/create/${param}`, data)
+    .then((res) =>
+      dispatch({ type: types.BOOK_APPOINTMENT_SUCESSS, payload: data })
     )
     .catch((err) =>
       dispatch({
@@ -49,6 +45,15 @@ export const bookAppointment = (data) => (dispatch) => {
         payload: err.response.data,
       })
     );
+};
+
+export const getPatientQueueLength = (params) => (dispatch) => {
+  return axios
+    .get(`http://localhost:5000/patient/queue/${params}`)
+    .then((res) => {
+      dispatch({ type: types.PATIENT_QUEUE_LENGTH, payload: res.data.count });
+      return { noOfPatient: res.data.count };
+    });
 };
 
 export { getDoctorsData };

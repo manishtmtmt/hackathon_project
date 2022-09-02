@@ -6,6 +6,7 @@ const initialState = {
   error: false,
   singledoc:{},
   patients: [],
+  noOfPatient: 0
 };
 
 export const appReducer = (state = initialState, { type, payload }) => {
@@ -75,6 +76,13 @@ export const appReducer = (state = initialState, { type, payload }) => {
         ...state,
         loading: false,
         error: true
+      }
+    }
+
+    case types.PATIENT_QUEUE_LENGTH: {
+      return {
+        ...state,
+        noOfPatient: payload
       }
     }
 

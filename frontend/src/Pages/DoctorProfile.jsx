@@ -23,14 +23,16 @@ import {
   FormControl,
   FormLabel,
   Input,
+  useToast,
 } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { bookAppointment, getDoctorsData } from "../AppReducer/action";
+import { bookAppointment, getDoctorsData, getPatientQueueLength } from "../AppReducer/action";
 import BookAppoitment from "../components/BookAppoitment";
 import { loadData } from "../hoc/LocalStorage";
 
 export const DoctorProfile = () => {
+  const toast = useToast();
   let email = loadData("email");
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
@@ -40,6 +42,7 @@ export const DoctorProfile = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const [signleDoctor, setSingleDoctor] = useState({});
+  const [noOfPatient, setNoOfPatient] = useState(0)
   const [patient, setPatient] = useState({
     email,
     completed: false,
@@ -54,17 +57,12 @@ export const DoctorProfile = () => {
   };
 
   const handleSubmit = () => {
-    const currentDoctor = doctors.find((doctor) => doctor._id === id);
-    setPatient({ ...patient, specilization: currentDoctor.specilization });
-    const callback = (x) => {
-      console.log(x);
-    };
-
-    callback(patient);
-    // console.log(signleDoctor.specilization);
-    // setSpecilization(signleDoctor.specilization);
-    // console.log(specilization);
-    // dispatch(bookAppointment(patient));
+    // toast({
+    //   title: "Booking successful",
+    //   position: "top",
+    //   isClosable: true,
+    // })
+    dispatch(bookAppointment(id, patient))
   };
 
   // getting the doctors data while refreshing also
@@ -73,6 +71,14 @@ export const DoctorProfile = () => {
       dispatch(getDoctorsData());
     }
   }, []);
+
+  useEffect(()=>{
+    dispatch(getPatientQueueLength(id)).then((res)=>{
+      setNoOfPatient(res.noOfPatient)
+    })
+  },[dispatch])
+
+  console.log(noOfPatient)
 
   // finding the doctor using id with useParams
   useEffect(() => {
