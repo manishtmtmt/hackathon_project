@@ -10,8 +10,10 @@ export {
   GET_DOCTORS_DATA_FAILURE,
 };
 
-
 export const GET_SINGLE_DOCTOR_LOADING = "get_single_doctor/loading";
 export const GET_SINGLE_DOCTOR_SUCCESS = "get_single_doctor/sucess";
 export const GET_SINGLE_DOCTOR_ERROR = "get_single_doctor/error";
 
+export const BOOK_APPOINTMENT_LOADING = "BOOK_APPOINTMENT_LOADING";
+export const BOOK_APPOINTMENT_SUCESSS = "BOOK_APPOINTMENT_SUCESSS";
+export const BOOK_APPOINTMENT_FAILURE = "BOOK_APPOINTMENT_FAILURE";
