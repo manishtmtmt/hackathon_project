@@ -161,26 +161,7 @@ export const DoctorProfile = () => {
         </ModalContent>
       </Modal>
 
-      {/* <Table border="1px solid red" w="60%" m="auto" mt="10">
-        <Thead>
-          <Th textAlign="center">ID</Th>
-          <Th textAlign="center">name</Th>
-          <Th textAlign="center">description</Th>
-          <Th textAlign="center">Delete</Th>
-        </Thead>
-        <Tbody>
-          {patients.map((patient) => (
-            <Tr>
-              <Td textAlign="center">{patient.id}</Td>
-              <Td textAlign="center">{patient.name}</Td>
-              <Td textAlign="center">{patient.description}</Td>
-              <Td textAlign="center">
-                <Button>Remove</Button>
-              </Td>
-            </Tr>
-          ))}
-        </Tbody>
-      </Table> */}
+      
     </Container>
   );
 };

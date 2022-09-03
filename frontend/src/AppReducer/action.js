@@ -55,4 +55,15 @@ export const getPatientQueueLength = (params) => (dispatch) => {
     });
 };
 
+export const updateStatus = (id, data) => (dispatch) => {
+  dispatch({ type: types.UPDATE_PATIENTS_DATA_REQUEST });
+  return axios
+    .patch(`http://localhost:5000/patient/edit/${id}`, data)
+    .then((res) =>
+      dispatch({ type: types.UPDATE_PATIENTS_DATA_SUCCESS, payload: res.data })
+    )
+    .catch((err) =>
+      dispatch({ type: types.UPDATE_PATIENTS_DATA_FAILURE, payload: err })
+    );
+};
 export { getDoctorsData };

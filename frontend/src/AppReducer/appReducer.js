@@ -85,7 +85,6 @@ export const appReducer = (state = initialState, { type, payload }) => {
         queue: payload,
       };
     }
-
     default: {
       return state;
     }
