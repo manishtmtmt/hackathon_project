@@ -26,6 +26,7 @@ patientRouter.get("/", async (req, res) => {
 
 patientRouter.patch("/edit/:patientId", async (req, res) => {
   const { patientId } = req.params;
+  console.log(req.params)
   const { completed } = req.body;
   const updatedPatient = await PatientModel.findOneAndUpdate(
     { _id: patientId },
