@@ -28,11 +28,6 @@ const AdminsPage = () => {
   const dispatch = useDispatch();
   const { queue } = useSelector((state) => state.app);
 
-  const handleUpdated = (id) => {
-    dispatch(updateStatus(id, { completed: true }));
-    dispatch(getPatientQueueLength(singledoc._id));
-  };
-
   useEffect(() => {
     let email = loadData("email");
     dispatch(singleDoctor(email));
@@ -44,7 +39,6 @@ const AdminsPage = () => {
     }
   }, [dispatch, queue.length]);
 
-  console.log(queue, "queue");
   return (
     <>
       <Flex>
@@ -73,38 +67,11 @@ const AdminsPage = () => {
             </Text>
           </Box>
           <Box textAlign="start" mt="6" fontSize="2xl" as="mark">
-            <Link to="/schedule">Check Todays Appointment</Link>
+            <Link to={`/schedule`}>Check Todays Appointment</Link>
           </Box>
         </Box>
       </Flex>
-      {queue.length !== 0 ? (
-        <Table border="1px solid red" w="60%" m="auto" mt="10">
-        <Thead>
-          <Th textAlign="center">ID</Th>
-          <Th textAlign="center">name</Th>
-          <Th textAlign="center">description</Th>
-          <Th textAlign="center">Delete</Th>
-        </Thead>
-        <Tbody>
-          {queue.map((patient, i) => (
-            <Tr>
-              <Td textAlign="center">{i + 1}</Td>
-              <Td textAlign="center">{patient.patientname}</Td>
-              <Td textAlign="center">{patient.description}</Td>
-              <Td textAlign="center">
-                <Button
-                  isDisabled={patient.completed}
-                  colorScheme="green"
-                  onClick={() => handleUpdated(patient._id)}
-                >
-                  Completed
-                </Button>
-              </Td>
-            </Tr>
-          ))}
-        </Tbody>
-      </Table>
-      ) : ""}
+      
     </>
   );
 };
