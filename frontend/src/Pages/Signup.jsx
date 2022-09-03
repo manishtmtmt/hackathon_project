@@ -12,18 +12,19 @@ import {
   Heading,
   Text,
   useColorModeValue,
-  Link,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useDispatch } from "react-redux";
 import { register } from "../Store/AuthReducer/action";
 import { USER_REGISTER_SUCCESS } from "../Store/AuthReducer/actionTypes";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Signup() {
   const [showPassword, setShowPassword] = useState(false);
   const [userData, setUserData] = useState({});
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -38,6 +39,7 @@ export default function Signup() {
     dispatch(register(userData)).then((res) => {
       if (res.status === USER_REGISTER_SUCCESS) {
         alert(res.message);
+        navigate("/login");
       } else {
         alert(res.message);
       }
@@ -68,11 +70,21 @@ export default function Signup() {
             <form onSubmit={handleSubmit}>
               <FormControl id="firstName" isRequired>
                 <FormLabel>Username</FormLabel>
-                <Input type="text" name="username" onChange={handleChange} />
+                <Input
+                  type="text"
+                  name="username"
+                  onChange={handleChange}
+                  isRequired
+                />
               </FormControl>
               <FormControl id="email" isRequired>
                 <FormLabel>Email address</FormLabel>
-                <Input type="email" name="email" onChange={handleChange} />
+                <Input
+                  type="email"
+                  name="email"
+                  onChange={handleChange}
+                  isRequired
+                />
               </FormControl>
               <FormControl id="password" isRequired>
                 <FormLabel>Password</FormLabel>
@@ -81,6 +93,7 @@ export default function Signup() {
                     type={showPassword ? "text" : "password"}
                     name="password"
                     onChange={handleChange}
+                    isRequired
                   />
                   <InputRightElement h={"full"}>
                     <Button
@@ -110,7 +123,10 @@ export default function Signup() {
               </Stack>
               <Stack pt={6}>
                 <Text align={"center"}>
-                  Already a user? <Link color={"blue.400"}>Login</Link>
+                  Already a user?{" "}
+                  <Link to="/login">
+                    <span style={{ color: "blue" }}>Login</span>
+                  </Link>
                 </Text>
               </Stack>
             </form>

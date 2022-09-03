@@ -6,11 +6,11 @@ import {
   Input,
   Checkbox,
   Stack,
-  Link,
   Button,
   Heading,
   Text,
   useColorModeValue,
+  Link,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -34,7 +34,7 @@ export default function Login() {
 
   const handleClick = () => {
     console.log(form);
-    saveData("email",form.email);
+    saveData("email", form.email);
     dispatch(loginApi(form));
   };
 
@@ -91,6 +91,14 @@ export default function Login() {
               >
                 Sign in
               </Button>
+            </Stack>
+            <Stack pt={2}>
+              <Text align={"center"}>
+                Does not have an account?{" "}
+                <Link onClick={()=>navigate("/signup")}>
+                  <span style={{ color: "blue" }}>Create one</span>
+                </Link>
+              </Text>
             </Stack>
           </Stack>
         </Box>
