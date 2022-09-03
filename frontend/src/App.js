@@ -8,7 +8,7 @@ import Schedule from "./Pages/Schedule";
 import Signup from "./Pages/Signup";
 import AdminsPage from "./Pages/AdminsPage";
 
-import { UserPage } from "./components/UserPage";
+import { UserPage } from "./Pages/UserPage";
 
 import { DoctorProfile } from "./Pages/DoctorProfile";
 
