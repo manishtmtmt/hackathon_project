@@ -53,7 +53,6 @@ export const DoctorProfile = () => {
     completed: false,
   });
   const { patientQueue, patients } = useSelector((state) => state.app);
-  console.log(patientQueue, patients);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -83,7 +82,6 @@ export const DoctorProfile = () => {
     });
     return no;
   };
-  console.log(queueVal());
 
   // useEffect(() => {}, [queue.length]);
 
@@ -95,9 +93,9 @@ export const DoctorProfile = () => {
   }, []);
 
   useEffect(() => {
-    if (patientQueue.length == 0) {
+    // if (patientQueue.length == 0) {
       dispatch(getPatientQueue(id));
-    }
+    // }
   }, [patientQueue.length]);
 
   // finding the doctor using id with useParams

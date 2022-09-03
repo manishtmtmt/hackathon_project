@@ -14,12 +14,13 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { loginApi } from "../AuthReducer/action";
 import { saveData } from "../hoc/LocalStorage";
 
 export default function Login() {
   const [form, Setform] = useState({});
+  const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isAuth, role } = useSelector((state) => state.login);
@@ -32,6 +33,8 @@ export default function Login() {
     });
   };
 
+  console.log(location)
+
   const handleClick = () => {
     console.log(form);
     saveData("email", form.email);
@@ -39,9 +42,9 @@ export default function Login() {
   };
 
   if (isAuth && role == "doctor") {
-    navigate("/adminpage");
+    navigate("/adminpage", { replace: true });
   } else if (isAuth && role == "user") {
-    navigate("/userpage");
+    navigate("/userpage", { replace: true });
   }
   return (
     <Flex
@@ -95,7 +98,7 @@ export default function Login() {
             <Stack pt={2}>
               <Text align={"center"}>
                 Does not have an account?{" "}
-                <Link onClick={()=>navigate("/signup")}>
+                <Link onClick={() => navigate("/signup")}>
                   <span style={{ color: "blue" }}>Create one</span>
                 </Link>
               </Text>

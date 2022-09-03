@@ -4,7 +4,7 @@ import axios from "axios";
 export const register = (payload) => (dispatch) => {
   dispatch({ type: types.USER_REGISTER_LOADING });
   return axios
-    .post("http://localhost:5000/user/create", payload, {
+    .post("https://hackathon-elite-coders.herokuapp.com/user/create", payload, {
       headers: {
         "Content-Type": "application/json",
       },
