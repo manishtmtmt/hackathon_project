@@ -8,9 +8,12 @@ import Schedule from "./Pages/Schedule";
 import Signup from "./Pages/Signup";
 import AdminsPage from "./Pages/AdminsPage";
 
-import { UserPage } from "./Pages/UserPage";
+
 
 import { DoctorProfile } from "./Pages/DoctorProfile";
+import { UserPage } from "./Pages/UserPage";
+import { RequiredAuth } from "./hoc/RequiredAuth";
+import { RequiredRole, RequiredRoleUser } from "./hoc/RequiredRole";
 
 //done
 
@@ -20,14 +23,57 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/schedule" element={<Schedule />} />
+        <Route
+          path="/home"
+          element={
+            <RequiredAuth>
+              <Home />
+            </RequiredAuth>
+          }
+        />
+        <Route
+          path="/schedule"
+          element={
+            <RequiredAuth>
+              <RequiredRole>
+                <Schedule />
+              </RequiredRole>
+            </RequiredAuth>
+          }
+        />
         <Route path="/signup" element={<Signup />} />
 
-        <Route path="/adminpage" element={<AdminsPage />} />
+        <Route
+          path="/adminpage"
+          element={
+            <RequiredAuth>
+              <RequiredRole>
+                <AdminsPage />
+              </RequiredRole>
+            </RequiredAuth>
+          }
+        />
 
-        <Route path="/userpage" element={<UserPage />} />
-        <Route path="/doctorprofile/:id" element={<DoctorProfile />} />
+        <Route
+          path="/userpage"
+          element={
+            <RequiredAuth>
+              <RequiredRoleUser>
+                <UserPage />
+              </RequiredRoleUser>
+            </RequiredAuth>
+          }
+        />
+        <Route
+          path="/doctorprofile/:id"
+          element={
+            <RequiredAuth>
+              <RequiredRoleUser>
+                <DoctorProfile />
+              </RequiredRoleUser>
+            </RequiredAuth>
+          }
+        />
       </Routes>
     </div>
   );
