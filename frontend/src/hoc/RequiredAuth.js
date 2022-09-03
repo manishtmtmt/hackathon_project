@@ -10,5 +10,5 @@ export const RequiredAuth = ({ children }) => {
   if (isAuth) {
     return children;
   }
-  return <Navigate to="/login" state={{ from: location }} />;
+  return <Navigate to="/login" state={{ from: location.pathname }} replace/>;
 };

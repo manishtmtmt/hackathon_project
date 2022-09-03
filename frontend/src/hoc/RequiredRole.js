@@ -1,20 +1,20 @@
-
-import { Navigate } from "react-router-dom"
-import { loadData } from "./LocalStorage"
-
+import { Navigate, useLocation } from "react-router-dom";
+import { loadData } from "./LocalStorage";
 
 export const RequiredRole = ({ children }) => {
-    let role = loadData("role")
-    if(role === "doctor"){
-        return children
-    }
-    return <Navigate  to="/userpage" /> 
-}
+  const location = useLocation();
+  let role = loadData("role");
+  if (role === "doctor") {
+    return children;
+  }
+  return <Navigate to="/userpage" state={{ from: location }} replace />;
+};
 
 export const RequiredRoleUser = ({ children }) => {
-    let role = loadData("role")
-    if(role === "user"){
-        return children
-    }
-    return <Navigate  to="/adminpage" /> 
-}
+    const location = useLocation();
+  let role = loadData("role");
+  if (role === "user") {
+    return children;
+  }
+  return <Navigate to="/adminpage" state={{ from: location }} replace />;
+};
