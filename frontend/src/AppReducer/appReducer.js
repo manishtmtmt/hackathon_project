@@ -7,6 +7,7 @@ const initialState = {
   singledoc: {},
   patients: [],
   queue: [],
+  patientQueue: [],
 };
 
 export const appReducer = (state = initialState, { type, payload }) => {
@@ -83,6 +84,13 @@ export const appReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         queue: payload,
+      };
+    }
+
+    case types.PATIENT_QUEUE: {
+      return {
+        ...state,
+        patientQueue: payload,
       };
     }
     default: {

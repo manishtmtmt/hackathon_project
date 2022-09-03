@@ -55,6 +55,14 @@ export const getPatientQueueLength = (params) => (dispatch) => {
     });
 };
 
+export const getPatientQueue = (params) => (dispatch) => {
+  return axios
+    .get(`http://localhost:5000/patient/patientQueue/${params}`)
+    .then((res) => {
+      dispatch({ type: types.PATIENT_QUEUE, payload: res.data });
+    });
+};
+
 export const updateStatus = (id, data) => (dispatch) => {
   dispatch({ type: types.UPDATE_PATIENTS_DATA_REQUEST });
   return axios
