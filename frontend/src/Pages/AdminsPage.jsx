@@ -30,6 +30,7 @@ const AdminsPage = () => {
 
   const handleUpdated = (id) => {
     dispatch(updateStatus(id, { completed: true }));
+    dispatch(getPatientQueueLength(singledoc._id));
   };
 
   useEffect(() => {
@@ -38,8 +39,10 @@ const AdminsPage = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(getPatientQueueLength(singledoc._id));
-  }, []);
+    if(queue.length === 0) {
+      dispatch(getPatientQueueLength(singledoc._id));
+    }
+  }, [dispatch, queue.length]);
 
   console.log(queue, "queue");
   return (
@@ -74,7 +77,8 @@ const AdminsPage = () => {
           </Box>
         </Box>
       </Flex>
-      <Table border="1px solid red" w="60%" m="auto" mt="10">
+      {queue.length !== 0 ? (
+        <Table border="1px solid red" w="60%" m="auto" mt="10">
         <Thead>
           <Th textAlign="center">ID</Th>
           <Th textAlign="center">name</Th>
@@ -89,6 +93,7 @@ const AdminsPage = () => {
               <Td textAlign="center">{patient.description}</Td>
               <Td textAlign="center">
                 <Button
+                  isDisabled={patient.completed}
                   colorScheme="green"
                   onClick={() => handleUpdated(patient._id)}
                 >
@@ -99,6 +104,7 @@ const AdminsPage = () => {
           ))}
         </Tbody>
       </Table>
+      ) : ""}
     </>
   );
 };

@@ -30,6 +30,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   bookAppointment,
   getDoctorsData,
+  getPatientQueue,
   getPatientQueueLength,
 } from "../AppReducer/action";
 import BookAppoitment from "../components/BookAppoitment";
@@ -51,8 +52,8 @@ export const DoctorProfile = () => {
     email,
     completed: false,
   });
-  const { queue, patients } = useSelector((state) => state.app);
-  console.log(queue, patients);
+  const { patientQueue, patients } = useSelector((state) => state.app);
+  console.log(patientQueue, patients);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -75,15 +76,16 @@ export const DoctorProfile = () => {
 
   const queueVal = () => {
     let no = 0;
-    queue.map((ele, i) => {
+    patientQueue.map((ele, i) => {
       if (ele.email === email) {
         no = i + 1;
       }
     });
     return no;
   };
+  console.log(queueVal());
 
-  useEffect(() => {}, [queue.length]);
+  // useEffect(() => {}, [queue.length]);
 
   // getting the doctors data while refreshing also
   useEffect(() => {
@@ -93,8 +95,10 @@ export const DoctorProfile = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(getPatientQueueLength(id));
-  }, [dispatch, queue.length]);
+    if (patientQueue.length == 0) {
+      dispatch(getPatientQueue(id));
+    }
+  }, [patientQueue.length]);
 
   // finding the doctor using id with useParams
   useEffect(() => {
@@ -104,7 +108,7 @@ export const DoctorProfile = () => {
     }
   }, [id, doctors]); // while changing the id it should be re-render the single doctor
   return (
-    <Container maxW="100%" border="2px solid red">
+    <Container maxW="100%" mt={5}>
       <Box border="1px solid green" w="60%" m="auto">
         <Flex>
           <Image src={signleDoctor.profileImage} alt="profile" h="300px" />
@@ -112,14 +116,16 @@ export const DoctorProfile = () => {
             <Text>Name : {signleDoctor.name}</Text>
             <Text>Specilization : {signleDoctor.specilization}</Text>
             <Text>Experience : {signleDoctor.experience}</Text>
-            <Text>Patients in Queue : {queue.length}</Text>
+            <Text>Patients in Queue : {patientQueue.length}</Text>
           </Box>
         </Flex>
       </Box>
       {/* <Button onClick={onOpen}>Book Appointment</Button> */}
       {/* <Text m={2}>Your number is {queueVal()}</Text> */}
       {queueVal() === 0 ? (
-        <Button onClick={onOpen}>Book Appointment</Button>
+        <Button onClick={onOpen} colorScheme="teal" mt={5}>
+          Book Appointment
+        </Button>
       ) : (
         <Text m={2}>Your number is {queueVal()}</Text>
       )}
@@ -160,8 +166,6 @@ export const DoctorProfile = () => {
           </ModalFooter>
         </ModalContent>
       </Modal>
-
-      
     </Container>
   );
 };

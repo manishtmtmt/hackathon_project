@@ -44,6 +44,12 @@ patientRouter.delete("/delete/:patientId", async (req, res) => {
 
 patientRouter.get("/queue/:doctorId", async (req, res) => {
   const {doctorId} = req.params;
+  const patients = await PatientModel.find({ doctorId });
+  return res.status(200).send(patients);
+});
+
+patientRouter.get("/patientQueue/:doctorId", async (req, res) => {
+  const {doctorId} = req.params;
   const patients = await PatientModel.find({ doctorId, completed: false });
   return res.status(200).send(patients);
 });

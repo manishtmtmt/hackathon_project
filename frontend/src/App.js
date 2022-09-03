@@ -22,10 +22,11 @@ function App() {
     <div className="App">
       <Navbar />
       <Routes>
+        {/* <Route path="/" el /> */}
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route
-          path="/home"
+          path="/"
           element={
             <RequiredAuth>
               <Home />

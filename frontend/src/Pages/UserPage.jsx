@@ -21,7 +21,7 @@ export const UserPage = () => {
   }, []);
 
   return (
-    <Container border="2px solid red" maxW="100%">
+    <Container p={5} maxW="100%">
       <Grid gridTemplateColumns="repeat(2,1fr)" w="65%" m="auto" gridGap="20px">
         {doctors.map((doctor) => (
           <Link to={`/doctorprofile/${doctor._id}`} key={doctor._id}>
@@ -37,7 +37,6 @@ export const UserPage = () => {
                   <Text>Name : {doctor.name}</Text>
                   <Text>Specilization : {doctor.specilization}</Text>
                   <Text>Experience : {doctor.experience}</Text>
-                  <Text>Patients in Queue : {doctor.queue}</Text>
                 </Box>
               </Flex>
             </GridItem>
