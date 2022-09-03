@@ -8,13 +8,15 @@ import {
   Text,
   Flex,
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getDoctorsData } from "../AppReducer/action";
 
 export const UserPage = () => {
   const dispatch = useDispatch();
   const doctors = useSelector((state) => state.app.doctors); // getting the doctors data from redux store
+  const location = useLocation();
+  console.log(location)
 
   useEffect(() => {
     dispatch(getDoctorsData()); // dispatching the doctors data to the store

@@ -16,7 +16,7 @@ const Navbar = () => {
   };
 
   return (
-    <Flex justify={"space-between"} bg="teal.200">
+    <Flex justify={"space-between"} bg="teal.200" p={2}>
       <Text m="1">Home</Text>
       {!isAuth ? (
         <Flex justifyContent={"space-evenly"}>
